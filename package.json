@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "express": "^4.17.1",
     "postman-request": "^2.88.1-postman.30",
     "yargs": "^17.2.1"
   }
