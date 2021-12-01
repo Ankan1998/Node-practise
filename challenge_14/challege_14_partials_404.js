@@ -28,12 +28,16 @@ forecast(-75.7088, 44.1545,k ,(error, data) => {
   })
 
   app.get("/",(req,res)=>{
-    res.render('',{title:"Homepage"});
+    res.render('index',{title:"Homepage"});
     
 }) 
 
 app.get("/contact",(req,res)=>{
     res.render('contact',{title:"Contact"});
+    
+}) 
+app.get("*",(req,res)=>{
+    res.render('404',{title:"This is 404 error"});
     
 }) 
 
