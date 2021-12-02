@@ -5,7 +5,7 @@ const app = express();
 app.use(express.static(path.join(__dirname,'/public')))
 
 const forecast  = require('./challenge_9/challenge_9_callback_abstraction')
-const k = '11820ab3394efd0ba19ca8e4ae1897cf'
+const k = ''
 
 
   app.get("/",(req,res)=>{
