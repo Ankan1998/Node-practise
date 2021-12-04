@@ -14,6 +14,11 @@ app.get("/contact",(req,res)=>{
     res.render('contact');
     
 }) 
+
+app.get("/weather",(req,res)=>{
+    res.render('weather');
+    
+}) 
 app.get('/',(req,res)=>{
     res.render('index')
 })
