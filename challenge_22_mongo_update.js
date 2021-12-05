@@ -26,5 +26,17 @@ mongoClient.connect(connectionURL, {
         console.log(e)
     })
     
+    db.collection('tasks').updateMany({
+        completed: "false"
+    }, {
+        $set: {
+            completed: "true"
+        }
+
+    }).then((result) => {
+        console.log(result)
+    }).catch((e) => {
+        console.log(e)
+    })
 
 })
