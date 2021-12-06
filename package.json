@@ -5,6 +5,7 @@
     "mongodb": "^4.2.1",
     "mongoose": "^6.0.14",
     "postman-request": "^2.88.1-postman.30",
+    "validator": "^13.7.0",
     "yargs": "^17.2.1"
   }
 }
