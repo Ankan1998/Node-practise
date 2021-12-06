@@ -3,6 +3,7 @@
     "express": "^4.17.1",
     "hbs": "^4.2.0",
     "mongodb": "^4.2.1",
+    "mongoose": "^6.0.14",
     "postman-request": "^2.88.1-postman.30",
     "yargs": "^17.2.1"
   }
