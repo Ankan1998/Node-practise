@@ -16,6 +16,14 @@ app.post('/users',(req,res)=>{
     })
 })
 
+app.get('/users',(req,res)=>{
+    User.find({}).then((users)=>{
+        res.send(users)
+    }).catch((e)=>{
+        res.status(500).send()
+    })
+})
+
 app.listen(port,()=>{
     console.log('Server listening on port: ' + port)
 })
