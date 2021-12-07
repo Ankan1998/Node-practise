@@ -16,9 +16,13 @@ app.post('/users',(req,res)=>{
     })
 })
 
+// Promise chaining --> returning one promise from another promise and then use .then on it
 app.get('/users',(req,res)=>{
     User.find({}).then((users)=>{
         res.send(users)
+        return User.countDocuments({})
+    }).then((result)=>{
+        console.log(result)
     }).catch((e)=>{
         res.status(500).send()
     })
