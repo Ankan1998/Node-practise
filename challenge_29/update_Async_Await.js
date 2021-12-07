@@ -8,6 +8,14 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 
 app.patch('/users/:id', async (req, res) => {
+    const changes = Object.keys(req.body) // Convert json fields to array 
+    const allowedChanges = ['name','email']
+    const isValidChange = changes.every((change)=>{
+        return allowedChanges.includes(change)
+    })
+    if(!isValidChange){
+        return res.status(400).send()
+    }
     const _id = req.params.id
     try {
         const user = await User.findByIdAndUpdate(
