@@ -74,7 +74,8 @@ router.get('/users/:id',(req,res)=>{
 router.post('/users/login',async (req,res)=>{
     try{
         const user =  await User.matchCred(req.body.mobileNo,req.body.password)
-        return res.send(user).status(200)
+        const token = await user.generateToken(user._id)
+        return res.status(200).send({user,token})
     } catch(e){
         res.status(400).send()
     }
