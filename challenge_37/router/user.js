@@ -4,10 +4,6 @@ const User = require('../model/user_model')
 const auth = require('../middleware/user_middleware')
 const router = new express.Router()
 
-const app = express()
-
-app.use(express.json())
-
 // User profile 
 router.get('/users/me', auth, async (req, res) => {
     return res.send(req.user)
