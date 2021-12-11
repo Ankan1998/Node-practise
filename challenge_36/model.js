@@ -38,6 +38,14 @@ const UserSchema = new mongoose.Schema({
 
 })
 
+// Hiding password and token
+UserSchema.methods.toJSON = function(){
+    const Obj = this.toObject()
+    delete Obj.password
+    delete Obj.tokens
+    return Obj
+}
+
 //Json web token instance method
 UserSchema.methods.generateToken = async function(id){
     const token = jwt.sign({_id:id.toString()},"ankan123")
