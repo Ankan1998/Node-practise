@@ -10,8 +10,8 @@ const auth = async function(req,res,next){
             throw new Error()
         } 
         req.user = user
+        req.token = token
         next()
-        // const token = req.headers.Authorization
     } catch(e){
         res.status(400).send("PLease Authenticate")
     }
