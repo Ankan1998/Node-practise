@@ -42,6 +42,7 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
+// User logout
 router.post('/users/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
@@ -49,6 +50,18 @@ router.post('/users/logout', auth, async (req, res) => {
         })
         req.user.save()
         res.send("User logged out")
+    } catch(e) {
+        res.status(400).send()
+    }
+
+})
+
+//User logout All
+router.post('/users/logoutAll', auth, async (req, res) => {
+    try {
+        req.user.tokens = []
+        req.user.save()
+        res.send("User logged out fromm All places")
     } catch(e) {
         res.status(400).send()
     }
