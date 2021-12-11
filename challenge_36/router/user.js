@@ -69,7 +69,7 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 })
 
 //Update user
-router.patch('/users/:id', async (req, res) => {
+router.patch('/users/update', auth, async (req, res) => {
     const changes = Object.keys(req.body) // Convert json fields to array 
     const allowedChanges = ['name', 'email', 'password']
     const isValidChange = changes.every((change) => {
@@ -78,19 +78,17 @@ router.patch('/users/:id', async (req, res) => {
     if (!isValidChange) {
         return res.status(400).send()
     }
-    const _id = req.params.id
     try {
-        const user = await User.findById(_id)
         changes.forEach((change) => {
-            user[change] = req.body[change]
+            req.user[change] = req.body[change]
         })
 
-        await user.save()
-        if (!user) {
+        await req.user.save()
+        if (!req.user) {
             return res.status(404).send()
         }
 
-        res.send(user)
+        res.send(req.user)
 
     } catch (e) {
         res.status(400).send()
