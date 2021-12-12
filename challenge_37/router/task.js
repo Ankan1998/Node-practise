@@ -31,5 +31,30 @@ router.get('/tasks', auth, async (req, res) => {
     }
 })
 
+// Delete a task
+router.delete('/tasks/delete/:id', auth,async (req, res) => {
+    try {
+        const task_list = await Task.find({
+            creator: req.user._id
+        })
+        var task = {}
+        task_list.every((t)=>{
+            if(t._id.toString()===req.params.id){
+                task = t
+                return false
+            } else {
+                return true
+            }
+        })
+        if (Object.keys(task).length===0) {
+            return res.status(404).send("Task not Found")
+        }
+
+        await Task.findByIdAndDelete(req.params.id)
+        res.send(task)
+    } catch (e) {
+        res.status(500).send()
+    }
+})
 
 module.exports = router
