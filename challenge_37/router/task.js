@@ -57,4 +57,14 @@ router.delete('/tasks/delete/:id', auth,async (req, res) => {
     }
 })
 
+// Delete all Task
+router.delete('/tasks/deleteAll', auth, async (req, res) => {
+    try {
+        await Task.deleteMany({creator:req.user._id})
+        res.status(200).send()
+
+    } catch (e) {
+        res.status(400).send()
+    }
+})
 module.exports = router
