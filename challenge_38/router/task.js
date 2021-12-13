@@ -18,6 +18,26 @@ router.post('/tasks/create', auth, async (req, res) => {
     }
 })
 
+//get creator details from task
+router.get('/tasks/creator/:id', auth, async (req, res) => {
+    try {
+        const task = await Task.findOne({
+            _id:req.params.id,
+            creator: req.user._id
+        })
+        if(!task){
+            return res.status(400).send()
+        }
+        await task.populate('creator')
+        res.status(200).send(task)
+
+
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+
 //Read task by id
 router.get('/tasks/:id', auth, async (req, res) => {
     try {
