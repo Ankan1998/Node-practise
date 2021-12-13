@@ -3,17 +3,19 @@ const mongoose = require('mongoose')
 const TaskSchema = new mongoose.Schema({
     task: {
         type: String,
-        required:true,
+        required: true,
     },
-    completed:{
+    completed: {
         type: Boolean
     },
-    creator:{
+    creator: {
         type: mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'User'
+        required: true,
+        ref: 'User'
     }
 
+}, {
+    timestamps: true
 })
 
 const tasks = mongoose.model('Task', TaskSchema)
