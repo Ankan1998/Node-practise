@@ -57,13 +57,38 @@ router.get('/tasks/:id', auth, async (req, res) => {
 })
 
 
-// Read all task
+// Read all task - using virtual get task
 router.get('/tasks', auth, async (req, res) => {
     try {
-        const task_list = await Task.find({
-            creator: req.user._id
+        await req.user.populate('tasks_virtual')
+        res.status(200).send(req.user.tasks_virtual)
+
+    } catch (e) {
+        res.status(400).send()
+    }
+})
+
+// Update task
+router.patch('/tasks/update/:id', auth, async (req, res) => {
+    const changes = Object.keys(req.body) // Convert json fields to array 
+    const allowedChanges = ['task', 'completed']
+    const isValidChange = changes.every((change) => {
+        return allowedChanges.includes(change)
+    })
+    if (!isValidChange) {
+        return res.status(400).send()
+    }
+    try {
+        const task = await Task.findOne({_id:req.params.id,creator:req.user._id})
+        if (!task) {
+            return res.status(404).send()
+        }
+        changes.forEach((change) => {
+            task[change] = req.body[change]
         })
-        res.status(200).send(task_list)
+
+        await task.save()
+        res.send(task)
 
     } catch (e) {
         res.status(400).send()
