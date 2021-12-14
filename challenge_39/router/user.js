@@ -116,7 +116,8 @@ router.get('/users', (req, res) => {
 })
 
 const upload = multer({
-    dest:'./challenge_39/images',
+    // For local storage uncomment this
+    // dest:'./challenge_39/images',
     limits: {
         fileSize: 100000
     },
@@ -129,7 +130,10 @@ const upload = multer({
     }
 })
 
-router.post('/upload',upload.single('file_upload'),(req,res)=>{
+// Auth and storing data binary to db
+router.post('/upload',auth,upload.single('file_upload'),(req,res)=>{
+    req.user.dp = req.file.buffer
+    req.user.save()
     res.send()
 },(error,req,res,next)=>{
     res.status(400).send("error Upload a document")
