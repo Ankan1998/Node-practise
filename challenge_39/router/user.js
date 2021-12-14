@@ -131,6 +131,8 @@ const upload = multer({
 
 router.post('/upload',upload.single('file_upload'),(req,res)=>{
     res.send()
+},(error,req,res,next)=>{
+    res.status(400).send("error Upload a document")
 })
 
 module.exports = router;
