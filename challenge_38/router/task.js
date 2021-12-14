@@ -58,6 +58,7 @@ router.get('/tasks/:id', auth, async (req, res) => {
 
 
 // Read all task - using virtual get task
+// Adding query and pagination
 router.get('/tasks', auth, async (req, res) => {
     const filter = {}
     if(req.query.completed){
@@ -66,7 +67,15 @@ router.get('/tasks', auth, async (req, res) => {
     try {
         await req.user.populate({
             path: 'tasks_virtual',
-            match:filter
+            match:filter,
+            options:{
+                limit:parseInt(req.query.limit),
+                skip:parseInt(req.query.skip),
+                // 1 Ascending -1 descending
+                sort:{
+                    createdAt:1
+                }
+            }
         })
         res.status(200).send(req.user.tasks_virtual)
 
