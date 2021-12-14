@@ -59,8 +59,15 @@ router.get('/tasks/:id', auth, async (req, res) => {
 
 // Read all task - using virtual get task
 router.get('/tasks', auth, async (req, res) => {
+    const filter = {}
+    if(req.query.completed){
+        filter.completed = req.query.completed==='true'
+    }
     try {
-        await req.user.populate('tasks_virtual')
+        await req.user.populate({
+            path: 'tasks_virtual',
+            match:filter
+        })
         res.status(200).send(req.user.tasks_virtual)
 
     } catch (e) {
