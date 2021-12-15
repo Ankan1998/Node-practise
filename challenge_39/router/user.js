@@ -3,6 +3,7 @@ require('../mongoose')
 const User = require('../model/user_model')
 const auth = require('../middleware/user_middleware')
 const multer = require('multer')
+const sharp = require('sharp')
 const router = new express.Router()
 
 // User profile 
@@ -131,8 +132,11 @@ const upload = multer({
 })
 
 // Auth and storing data binary to db
-router.post('/upload',auth,upload.single('file_upload'),(req,res)=>{
-    req.user.dp = req.file.buffer
+router.post('/upload',auth,upload.single('file_upload'),async (req,res)=>{
+    const modified = await sharp(req.file.buffer).resize({width:300,height:300}).toBuffer()
+    // without modification 
+    //req.user.dp = req.file.buffer
+    req.user.dp = modified
     req.user.save()
     res.send()
 },(error,req,res,next)=>{
