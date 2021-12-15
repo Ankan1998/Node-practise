@@ -139,4 +139,19 @@ router.post('/upload',auth,upload.single('file_upload'),(req,res)=>{
     res.status(400).send("error Upload a document")
 })
 
+// Get back user dp
+router.get('/users/:id/dp', auth, async (req,res)=>{
+    try{
+        const user = await User.findById(req.params.id)
+        if(!user || !user.dp){
+            res.status(404).send()
+        }
+        // Setting header
+        res.set('content-Type','image/jpg')
+        res.send(user.dp)
+    } catch(e){
+        res.status(404).send()
+    }
+})
+
 module.exports = router;
